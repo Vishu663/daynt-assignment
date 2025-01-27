@@ -7,14 +7,15 @@ import {
   doc,
   deleteDoc,
   Timestamp,
+  QueryDocumentSnapshot
 } from "firebase/firestore";
 
 // Fetch data from Firestore
 export const fetchData = async () => {
   const snapshot = await getDocs(collection(db, "users"));
-  const data = snapshot.docs.map((doc) => ({
-    id: doc.id, // Include document ID
-    ...doc.data(), // Spread document data
+  const data = snapshot.docs.map((doc: QueryDocumentSnapshot) => ({
+    id: doc.id, // Firestore document ID
+    ...(doc.data() as { name: string; DOB: Timestamp }), // Ensure name and DOB are included
   }));
   return data;
 };
