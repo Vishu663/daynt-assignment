@@ -1,31 +1,15 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { Button } from "@mui/material";
-import authService from "../services/authService";
 import { JSX } from "react";
 import DataTable from "../components/DataTable";
+import AuthGuard from "../components/AuthGuard";
 
 export default function DashboardPage(): JSX.Element {
-  const router = useRouter();
-
-  const handleLogout = (): void => {
-    authService.logout();
-    router.push("/");
-  };
-
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <DataTable />
-      <Button
-        onClick={handleLogout}
-        variant="contained"
-        color="error"
-        fullWidth
-        sx={{ mt: 2 }}
-      >
-        Logout
-      </Button>
-    </div>
+    <AuthGuard>
+      <div className="h-dvh w-full m-0 p-[12px] box-border flex flex-col items-center">
+        <h1>Dashboard</h1>
+        <DataTable />
+      </div>
+    </AuthGuard>
   );
 }

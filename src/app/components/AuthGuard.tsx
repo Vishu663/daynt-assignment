@@ -1,5 +1,8 @@
+"use client";
+
+import { JSX, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { JSX, ReactNode } from "react";
+import { ReactNode } from "react";
 import authService from "../services/authService";
 
 interface AuthGuardProps {
@@ -11,10 +14,11 @@ export default function AuthGuard({
 }: AuthGuardProps): JSX.Element | null {
   const router = useRouter();
 
-  if (typeof window !== "undefined" && !authService.isAuthenticated) {
-    router.push("/");
-    return null;
-  }
+  useEffect(() => {
+    if (!authService.checkAuth()) {
+      router.push("/");
+    }
+  }, [router]);
 
-  return <>{children}</>;
+  return authService.checkAuth() ? <>{children}</> : null;
 }
