@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Head from "next/head"; // Import next/head for head manipulation
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +25,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        {/* Preload critical scripts or assets */}
+        <link
+          rel="preload"
+          href="/path/to/your/critical-script.js"
+          as="script"
+        />
+        <link
+          rel="preload"
+          href="/path/to/your/critical-styles.css"
+          as="style"
+        />
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
